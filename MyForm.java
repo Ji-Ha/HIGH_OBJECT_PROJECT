@@ -46,11 +46,6 @@ public class MyForm extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 
-		// Label Result
-		final JLabel lblResult = new JLabel("Result", JLabel.CENTER);
-		lblResult.setBounds(150, 22, 370, 14);
-		getContentPane().add(lblResult);
-
 		// Table
 		table = new JTable();
 		getContentPane().add(table);
@@ -168,9 +163,9 @@ public class MyForm extends JFrame {
 				
 				// SQL Insert
 
-				String sql = "INSERT INTO person (name, ID, middle, final, homework, quiz, announcement, report, other, total) VALUES "
+				String sql = "INSERT INTO person (name, ID, middle, final, homework, quiz,attendance, announcement, report, other, total) VALUES "
 						+ "(" + "'" + name + "'," + StudentId + "," +  Mid + "," +  Fin + "," +  Subj + ","
-						+ Quiz + "," + Atend + ","+ Pre + "," +  Report + "," +  Another// + "," +  all
+						+ Quiz + "," + Atend + ","+ Pre + "," +  Report + "," +  Another + "," +  all
 						+ ")";
 				s.executeUpdate(sql);
 			}
