@@ -27,50 +27,50 @@ public class Perchant {
 
 	public Perchant() {
 
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setTitle("¹İ¿µºñÀ² °è»ê");
+		//window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.setTitle("ë°˜ì˜ë¹„ìœ¨ ê³„ì‚°");
 		window.setLocation(20, 20);
 		window.setSize(430, 170);
 
 		JPanel p = new JPanel();
-		JLabel o = new JLabel("¼ºÀûºñÀ² ¼³Á¤(%)");
+		JLabel o = new JLabel("ì„±ì ë¹„ìœ¨ ì„¤ì •(%)");
 		p.add(o);
 
 		JPanel p1 = new JPanel();
 		JPanel a = new JPanel();
-		JLabel a1 = new JLabel("Áß°£");
+		JLabel a1 = new JLabel("ì¤‘ê°„");
 		JTextField a2 = new JTextField(5);
 		a2.setText("" + 30);
 		JPanel b = new JPanel();
-		JLabel b1 = new JLabel("±â¸»");
+		JLabel b1 = new JLabel("ê¸°ë§");
 		JTextField b2 = new JTextField(5);
 		b2.setText("" + 30);
 		JPanel c = new JPanel();
-		JLabel c1 = new JLabel("°úÁ¦");
+		JLabel c1 = new JLabel("ê³¼ì œ");
 		JTextField c2 = new JTextField(5);
 		c2.setText("" + 5);
 		JPanel d = new JPanel();
-		JLabel d1 = new JLabel("ÄûÁî");
+		JLabel d1 = new JLabel("í€´ì¦ˆ");
 		JTextField d2 = new JTextField(5);
 		d2.setText("" + 10);
 		JPanel e = new JPanel();
-		JLabel e1 = new JLabel("¹ßÇ¥");
+		JLabel e1 = new JLabel("ë°œí‘œ");
 		JTextField e2 = new JTextField(5);
 		e2.setText("" + 5);
 		JPanel f = new JPanel();
-		JLabel f1 = new JLabel("º¸°í¼­");
+		JLabel f1 = new JLabel("ë³´ê³ ì„œ");
 		JTextField f2 = new JTextField(5);
 		f2.setText("" + 10);
 		JPanel g = new JPanel();
-		JLabel g1 = new JLabel("Ãâ¼®");
+		JLabel g1 = new JLabel("ì¶œì„");
 		JTextField g2 = new JTextField(5);
 		g2.setText("" + 5);
 		JPanel h = new JPanel();
-		JLabel h1 = new JLabel("±âÅ¸");
+		JLabel h1 = new JLabel("ê¸°íƒ€");
 		JTextField h2 = new JTextField(5);
 		h2.setText("" + 5);
-		// Áß°£ ±â¸» °úÁ¦ ÄûÁî ¹ßÇ¥ º¸°í¼­ Ãâ¼® ±âÅ¸
-		JButton jb = new JButton("¼ºÀûºñÀ² ¼³Á¤¿Ï·á");
+		// ì¤‘ê°„ ê¸°ë§ ê³¼ì œ í€´ì¦ˆ ë°œí‘œ ë³´ê³ ì„œ ì¶œì„ ê¸°íƒ€
+		JButton jb = new JButton("ì„±ì ë¹„ìœ¨ ì„¤ì •ì™„ë£Œ");
 
 		a.add(a1);
 		a.add(a2);
@@ -102,7 +102,7 @@ public class Perchant {
 		window.add(p, BorderLayout.NORTH);
 		window.add(jb, BorderLayout.SOUTH);
 		// JPanel p1 = new JPanel();
-		// »ó¼öÈ­ ½ÃÅ°±âÀ§ÇØ¼­ ÇÊ¿äÇÑ°Í.
+		// ìƒìˆ˜í™” ì‹œí‚¤ê¸°ìœ„í•´ì„œ í•„ìš”í•œê²ƒ.
 		String min = a2.getText();
 		String fin = b2.getText();
 		String Sub = c2.getText();
@@ -116,7 +116,7 @@ public class Perchant {
 
 		total = Double.parseDouble(min) + Double.parseDouble(fin) + Double.parseDouble(Sub) + Double.parseDouble(Quz)
 				+ Double.parseDouble(Pr) + Double.parseDouble(Re) + Double.parseDouble(Chul) + Double.parseDouble(Pl);
-		// ÀÌº¥Æ® »ı¼º.
+		// ì´ë²¤íŠ¸ ìƒì„±.
 		double[] per = new double[8];
 		ActionListener l = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -137,7 +137,7 @@ public class Perchant {
 
 					if (total1 != 100) {
 
-						JOptionPane.showMessageDialog(null, "Total 100 À¸·Î ¼³Á¤", "Total 100 À¸·Î ¼³Á¤",
+						JOptionPane.showMessageDialog(null, "Total 100 ìœ¼ë¡œ ì„¤ì •", "Total 100 ìœ¼ë¡œ ì„¤ì •",
 								JOptionPane.ERROR_MESSAGE);
 					} else {
 						/*
@@ -148,7 +148,7 @@ public class Perchant {
 						 * Double.parseDouble(Pl) / 100;
 						 * 
 						 */
-						window.addWindowListener(new WindowHandler());
+						window.dispose();
 					}
 
 				}
