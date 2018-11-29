@@ -1,8 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,64 +11,62 @@ import javax.swing.JTextField;
 
 public class Perchant {
 
-	private MenuDemo main;
-	JFrame window = new JFrame("Main");
+	JFrame window = new JFrame();
+	static double[] per = new double[8];
 
-	class WindowHandler extends WindowAdapter {
-		public void windowClosed(WindowEvent e) {
-			System.out.println("windowClosed");
-			window.dispose();
-			System.exit(0);
-
-		}
-	}
-
+	/*
+	 * class WindowHandler extends WindowAdapter { public void
+	 * windowClosed(WindowEvent e) { System.out.println("windowClosed");
+	 * window.dispose(); System.exit(0);
+	 * 
+	 * } }
+	 */
 	public Perchant() {
-
-		//window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setTitle("Î∞òÏòÅÎπÑÏú® Í≥ÑÏÇ∞");
+		per[0] = 0;
+		// window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.setTitle("π›øµ∫Ò¿≤ ∞ËªÍ");
 		window.setLocation(20, 20);
 		window.setSize(430, 170);
 
 		JPanel p = new JPanel();
-		JLabel o = new JLabel("ÏÑ±Ï†ÅÎπÑÏú® ÏÑ§Ï†ï(%)");
+		JLabel o = new JLabel("º∫¿˚∫Ò¿≤ º≥¡§(%)");
 		p.add(o);
 
 		JPanel p1 = new JPanel();
 		JPanel a = new JPanel();
-		JLabel a1 = new JLabel("Ï§ëÍ∞Ñ");
+		JLabel a1 = new JLabel("¡ﬂ∞£");
 		JTextField a2 = new JTextField(5);
 		a2.setText("" + 30);
 		JPanel b = new JPanel();
-		JLabel b1 = new JLabel("Í∏∞Îßê");
+		JLabel b1 = new JLabel("±‚∏ª");
 		JTextField b2 = new JTextField(5);
 		b2.setText("" + 30);
 		JPanel c = new JPanel();
-		JLabel c1 = new JLabel("Í≥ºÏ†ú");
+		JLabel c1 = new JLabel("∞˙¡¶");
 		JTextField c2 = new JTextField(5);
 		c2.setText("" + 5);
 		JPanel d = new JPanel();
-		JLabel d1 = new JLabel("ÌÄ¥Ï¶à");
+		JLabel d1 = new JLabel("ƒ˚¡Ó");
 		JTextField d2 = new JTextField(5);
 		d2.setText("" + 10);
 		JPanel e = new JPanel();
-		JLabel e1 = new JLabel("Î∞úÌëú");
+		JLabel e1 = new JLabel("πﬂ«•");
 		JTextField e2 = new JTextField(5);
 		e2.setText("" + 5);
 		JPanel f = new JPanel();
-		JLabel f1 = new JLabel("Î≥¥Í≥†ÏÑú");
+		JLabel f1 = new JLabel("∫∏∞Ìº≠");
 		JTextField f2 = new JTextField(5);
 		f2.setText("" + 10);
 		JPanel g = new JPanel();
-		JLabel g1 = new JLabel("Ï∂úÏÑù");
+		JLabel g1 = new JLabel("√‚ºÆ");
 		JTextField g2 = new JTextField(5);
 		g2.setText("" + 5);
 		JPanel h = new JPanel();
-		JLabel h1 = new JLabel("Í∏∞ÌÉÄ");
+		JLabel h1 = new JLabel("±‚≈∏");
 		JTextField h2 = new JTextField(5);
 		h2.setText("" + 5);
-		// Ï§ëÍ∞Ñ Í∏∞Îßê Í≥ºÏ†ú ÌÄ¥Ï¶à Î∞úÌëú Î≥¥Í≥†ÏÑú Ï∂úÏÑù Í∏∞ÌÉÄ
-		JButton jb = new JButton("ÏÑ±Ï†ÅÎπÑÏú® ÏÑ§Ï†ïÏôÑÎ£å");
+		// ¡ﬂ∞£ ±‚∏ª ∞˙¡¶ ƒ˚¡Ó πﬂ«• ∫∏∞Ìº≠ √‚ºÆ ±‚≈∏
+		JButton jb = new JButton("º∫¿˚∫Ò¿≤ º≥¡§øœ∑·");
 
 		a.add(a1);
 		a.add(a2);
@@ -102,7 +98,7 @@ public class Perchant {
 		window.add(p, BorderLayout.NORTH);
 		window.add(jb, BorderLayout.SOUTH);
 		// JPanel p1 = new JPanel();
-		// ÏÉÅÏàòÌôî ÏãúÌÇ§Í∏∞ÏúÑÌï¥ÏÑú ÌïÑÏöîÌïúÍ≤É.
+		// ªÛºˆ»≠ Ω√≈∞±‚¿ß«ÿº≠ « ø‰«—∞Õ.
 		String min = a2.getText();
 		String fin = b2.getText();
 		String Sub = c2.getText();
@@ -112,12 +108,8 @@ public class Perchant {
 		String Chul = g2.getText();
 		String Pl = h2.getText();
 
-		Double total;
+		// ¿Ã∫•∆Æ ª˝º∫.
 
-		total = Double.parseDouble(min) + Double.parseDouble(fin) + Double.parseDouble(Sub) + Double.parseDouble(Quz)
-				+ Double.parseDouble(Pr) + Double.parseDouble(Re) + Double.parseDouble(Chul) + Double.parseDouble(Pl);
-		// Ïù¥Î≤§Ìä∏ ÏÉùÏÑ±.
-		double[] per = new double[8];
 		ActionListener l = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				{
@@ -137,17 +129,18 @@ public class Perchant {
 
 					if (total1 != 100) {
 
-						JOptionPane.showMessageDialog(null, "Total 100 ÏúºÎ°ú ÏÑ§Ï†ï", "Total 100 ÏúºÎ°ú ÏÑ§Ï†ï",
-								JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Total 100 ¿∏∑Œ º≥¡§", "∫Ò¿≤ ø¿∑˘", JOptionPane.ERROR_MESSAGE);
 					} else {
-						/*
-						 * per[0] = Double.parseDouble(min) / 100; per[1] = Double.parseDouble(fin) /
-						 * 100; per[2] = Double.parseDouble(Sub) / 100; per[3] = Double.parseDouble(Quz)
-						 * / 100; per[4] = Double.parseDouble(Pr) / 100; per[5] = Double.parseDouble(Re)
-						 * / 100; per[6] = Double.parseDouble(Chul) / 100; per[7] =
-						 * Double.parseDouble(Pl) / 100;
-						 * 
-						 */
+
+						per[0] = Double.parseDouble(min) / 100;
+						per[1] = Double.parseDouble(fin) / 100;
+						per[2] = Double.parseDouble(Sub) / 100;
+						per[3] = Double.parseDouble(Quz) / 100;
+						per[4] = Double.parseDouble(Pr) / 100;
+						per[5] = Double.parseDouble(Re) / 100;
+						per[6] = Double.parseDouble(Chul) / 100;
+						per[7] = Double.parseDouble(Pl) / 100;
+
 						window.dispose();
 					}
 

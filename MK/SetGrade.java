@@ -1,18 +1,22 @@
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class SetGrade extends JFrame {
+public class SetGrade {
+	JFrame window = new JFrame();
 
 	public SetGrade() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("등급 설정");
-		setLocation(20, 20);
-		setSize(380, 210);
+
+		window.setTitle("등급 설정");
+		window.setLocation(20, 20);
+		window.setSize(380, 210);
 
 		JPanel p = new JPanel();
 		JLabel o = new JLabel("등급 설정(%)");
@@ -95,11 +99,35 @@ public class SetGrade extends JFrame {
 		p2.add(ex);
 		p2.add(ex1);
 
-		add(p, BorderLayout.NORTH);
-		add(p1, BorderLayout.CENTER);
-		add(p2, BorderLayout.SOUTH);
+		window.add(p, BorderLayout.NORTH);
+		window.add(p1, BorderLayout.CENTER);
+		window.add(p2, BorderLayout.SOUTH);
 		// JPanel p1 = new JPanel();
 
-		setVisible(true);
+		ActionListener l = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				{
+
+					String gd = i2.getText();
+
+					Double total1;
+					total1 = Double.parseDouble(gd);
+
+					if (total1 != 100) {
+
+						JOptionPane.showMessageDialog(null, "마지막 비율(F)을 100% 로 설정하세요", "비율 오류",
+								JOptionPane.ERROR_MESSAGE);
+					} else {
+
+						window.dispose();
+					}
+
+				}
+
+			}
+
+		};
+		jb.addActionListener(l);
+		window.setVisible(true);
 	}
 }

@@ -232,10 +232,20 @@ public class MenuDemo extends JFrame implements ActionListener {
 		Npanel.setLayout(new GridLayout(0, 12, 3, 3));
 		Npanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
 		Cpanel.setLayout(new GridLayout(40, 12, 3, 3));
-
+		/*
+		 * // 각각의 항목 비율 계산해주기. Perchant pc = new Perchant(); if (pc.per[0] != 0) {
+		 * double[] all = new double[40]; for (int j = 0; j < 1; j++) { String min =
+		 * T_mid[j].getText(); String fin = T_fin[j].getText(); String Sub =
+		 * T_Sub[j].getText(); String Quz = T_Quz[j].getText(); String Pr =
+		 * T_Pr[j].getText(); String Re = T_Re[j].getText(); String Chul =
+		 * T_Chul[j].getText(); String Pl = T_Pl[j].getText(); all[0] =
+		 * Double.parseDouble(min) * pc.per[0]; T_All[j].setText("" + all[0]);
+		 * 
+		 * } }
+		 */
 	}
 
-	// 등급 설정을 위한 메서드
+	// 비율을 반영하기위한 메서드
 
 	public static void main(String[] args) throws SQLException {
 		new MenuDemo();

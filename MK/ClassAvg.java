@@ -1,20 +1,24 @@
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class ClassAvg extends JFrame {
+public class ClassAvg {
+	JFrame window = new JFrame();
 
 	public ClassAvg() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("강좌 평균 점수");
-		setLocation(20, 20);
-		setSize(250, 120);
+		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.setTitle("강좌 평균 점수");
+		window.setLocation(20, 20);
+		window.setSize(250, 120);
 
 		JPanel p = new JPanel();
 		JLabel o = new JLabel("의 평균점수는");
@@ -33,8 +37,26 @@ public class ClassAvg extends JFrame {
 		JComboBox<String> cb = new JComboBox<>(option);
 		op.add(cb);
 		op.add(p);
-		add(op, BorderLayout.NORTH);
-		add(s, BorderLayout.CENTER);
-		setVisible(true);
+		jb.addActionListener(l);
+		window.add(op, BorderLayout.NORTH);
+		window.add(s, BorderLayout.CENTER);
+		window.setVisible(true);
+
 	}
+
+	// 이벤트 생성
+	ActionListener l = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			{
+				int total1 = 100;
+
+				if (total1 != 100) {
+
+					JOptionPane.showMessageDialog(null, "Total 100 으로 설정", "비율 오류", JOptionPane.ERROR_MESSAGE);
+				} else {
+					window.dispose();
+				}
+			}
+		}
+	};
 }
