@@ -15,17 +15,18 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
-public class MenuDemo extends JFrame implements ActionListener {
-
+public class MenuDemo extends Perchant implements ActionListener {
+	JFrame jf = new JFrame();
 	static Student[] stu = new Student[40];
 
 	public MenuDemo() throws SQLException {
-		super("성적처리 프로그램");
+		jf.setTitle("성적처리 프로그램");
 		makeMenu();
 		makePanels();
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(700, 1200);
-		setVisible(true);
+
+		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jf.setSize(700, 1200);
+		jf.setVisible(true);
 
 	}
 
@@ -108,21 +109,21 @@ public class MenuDemo extends JFrame implements ActionListener {
 		m5.add(new JMenuItem("수강 인원 설정"));
 		mb.add(m5);
 
-		setJMenuBar(mb);
+		jf.setJMenuBar(mb);
 
 	}
 
 	public void makePanels() {
 		// 최대 40명이기 떄문에, 40개로 만들어 놓았음.
 		BorderLayout b = new BorderLayout();
-		setLayout(b);
+		jf.setLayout(b);
 		JPanel Npanel = new JPanel();
 		JPanel Cpanel = new JPanel();
 		JPanel Spanel = new JPanel();
 
-		add(Npanel, BorderLayout.NORTH);
-		add(Cpanel, BorderLayout.CENTER);
-		add(Spanel, BorderLayout.SOUTH);
+		jf.add(Npanel, BorderLayout.NORTH);
+		jf.add(Cpanel, BorderLayout.CENTER);
+		jf.add(Spanel, BorderLayout.SOUTH);
 
 		// 버튼.
 		JButton save = new JButton("저장");
@@ -207,42 +208,54 @@ public class MenuDemo extends JFrame implements ActionListener {
 
 			public void actionPerformed(ActionEvent e) {
 				double[] all = new double[40];
-				for (int j = 0; j < 1; j++) {
-					String min = T_mid[j].getText();
-					String fin = T_fin[j].getText();
-					String Sub = T_Sub[j].getText();
-					String Quz = T_Quz[j].getText();
-					String Pr = T_Pr[j].getText();
-					String Re = T_Re[j].getText();
-					String Chul = T_Chul[j].getText();
-					String Pl = T_Pl[j].getText();
+				// for (int j = 0; j < 1; j++) {
+				// String min = T_mid[j].getText();
+				// String fin = T_fin[j].getText();
+				// String Sub = T_Sub[j].getText();
+				// String Quz = T_Quz[j].getText();
+				// String Pr = T_Pr[j].getText();
+				// String Re = T_Re[j].getText();
+				// String Chul = T_Chul[j].getText();
+				// String Pl = T_Pl[j].getText();
+				//
+				// all[j] = Double.parseDouble(min) + Double.parseDouble(fin) +
+				// Double.parseDouble(Sub)
+				// + Double.parseDouble(Quz) + Double.parseDouble(Pr) + Double.parseDouble(Re)
+				// + Double.parseDouble(Chul) + Double.parseDouble(Pl);
+				//
+				// T_All[j].setText("" + all[j]);
 
-					all[j] = Double.parseDouble(min) + Double.parseDouble(fin) + Double.parseDouble(Sub)
-							+ Double.parseDouble(Quz) + Double.parseDouble(Pr) + Double.parseDouble(Re)
-							+ Double.parseDouble(Chul) + Double.parseDouble(Pl);
+				if (per[0] != 0) {
+					for (int j = 0; j < 1; j++) {
+						String min = T_mid[j].getText();
+						String fin = T_fin[j].getText();
+						String Sub = T_Sub[j].getText();
+						String Quz = T_Quz[j].getText();
+						String Pr = T_Pr[j].getText();
+						String Re = T_Re[j].getText();
+						String Chul = T_Chul[j].getText();
+						String Pl = T_Pl[j].getText();
 
-					T_All[j].setText("" + all[j]);
+						all[j] = Double.parseDouble(min) * per[0] + Double.parseDouble(fin) * per[1]
+								+ Double.parseDouble(Sub) * per[2] + Double.parseDouble(Quz) * per[3]
+								+ Double.parseDouble(Pr) * per[4] + Double.parseDouble(Re) * per[5]
+								+ Double.parseDouble(Chul) * per[6] + Double.parseDouble(Pl) * per[7];
 
+						T_All[j].setText("" + all[j]);
+					}
 				}
+
 			}
 		});
 
-		setTitle("레이아웃 테스트");
+		jf.setTitle("레이아웃 테스트");
 
 		Npanel.setLayout(new GridLayout(0, 12, 3, 3));
 		Npanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
 		Cpanel.setLayout(new GridLayout(40, 12, 3, 3));
-		/*
-		 * // 각각의 항목 비율 계산해주기. Perchant pc = new Perchant(); if (pc.per[0] != 0) {
-		 * double[] all = new double[40]; for (int j = 0; j < 1; j++) { String min =
-		 * T_mid[j].getText(); String fin = T_fin[j].getText(); String Sub =
-		 * T_Sub[j].getText(); String Quz = T_Quz[j].getText(); String Pr =
-		 * T_Pr[j].getText(); String Re = T_Re[j].getText(); String Chul =
-		 * T_Chul[j].getText(); String Pl = T_Pl[j].getText(); all[0] =
-		 * Double.parseDouble(min) * pc.per[0]; T_All[j].setText("" + all[0]);
-		 * 
-		 * } }
-		 */
+
+		// 각각의 항목 비율 계산해주기.
+
 	}
 
 	// 비율을 반영하기위한 메서드
@@ -283,7 +296,7 @@ public class MenuDemo extends JFrame implements ActionListener {
 			break;
 		case "출석점수":
 			System.out.println("출석점수 출력");
-			new EachGraph("attendance");
+			// new EachGraph("attenance");
 			break;
 		case "중간시험점수":
 			System.out.println("중간시험점수 출력");
