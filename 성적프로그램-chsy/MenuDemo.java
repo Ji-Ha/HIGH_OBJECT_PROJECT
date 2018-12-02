@@ -15,17 +15,18 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
-public class MenuDemo extends JFrame implements ActionListener {
-
+public class MenuDemo extends Perchant implements ActionListener {
+	JFrame jf = new JFrame();
 	static Student[] stu = new Student[40];
 
 	public MenuDemo() throws SQLException {
-		super("¼ºÀûÃ³¸® ÇÁ·Î±×·¥");
+		jf.setTitle("ì„±ì ì²˜ë¦¬ í”„ë¡œê·¸ë¨");
 		makeMenu();
 		makePanels();
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(700, 1200);
-		setVisible(true);
+
+		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jf.setSize(700, 1200);
+		jf.setVisible(true);
 
 	}
 
@@ -33,64 +34,64 @@ public class MenuDemo extends JFrame implements ActionListener {
 		JMenuItem item;
 
 		JMenuBar mb = new JMenuBar();
-		JMenu m1 = new JMenu("ÆÄÀÏ");
-		JMenu m2 = new JMenu("½ÇÇà");
-		JMenu m3 = new JMenu("Åë°è");
-		JMenu m4 = new JMenu("Ãâ·Â");
-		JMenu m5 = new JMenu("¼³Á¤");
+		JMenu m1 = new JMenu("íŒŒì¼");
+		JMenu m2 = new JMenu("ì‹¤í–‰");
+		JMenu m3 = new JMenu("í†µê³„");
+		JMenu m4 = new JMenu("ì¶œë ¥");
+		JMenu m5 = new JMenu("ì„¤ì •");
 
-		m1.add(new JMenuItem("»õ ÆÄÀÏ"));
-		m1.add(new JMenuItem("ºÒ·¯¿À±â"));
-		m1.add(new JMenuItem("ÆÄÀÏ ÀúÀå"));
-		m1.add(new JMenuItem("´Ù¸¥ ÀÌ¸§À¸·Î ÆÄÀÏ ÀúÀå"));
+		m1.add(new JMenuItem("ìƒˆ íŒŒì¼"));
+		m1.add(new JMenuItem("ë¶ˆëŸ¬ì˜¤ê¸°"));
+		m1.add(new JMenuItem("íŒŒì¼ ì €ì¥"));
+		m1.add(new JMenuItem("ë‹¤ë¥¸ ì´ë¦„ìœ¼ë¡œ íŒŒì¼ ì €ì¥"));
 
 		mb.add(m1);
 
-		item = new JMenuItem("¼ºÀû°è»ê");
+		item = new JMenuItem("ì„±ì ê³„ì‚°");
 		item.addActionListener(this);
 		m2.add(item);
-		item = new JMenuItem("¹İ¿µºñÀ² ¼³Á¤");
+		item = new JMenuItem("ë°˜ì˜ë¹„ìœ¨ ì„¤ì •");
 		item.addActionListener(this);
 		m2.add(item);
-		item = new JMenuItem("µî±Ş¼³Á¤");
+		item = new JMenuItem("ë“±ê¸‰ì„¤ì •");
 		item.addActionListener(this);
 		m2.add(item);
-		item = new JMenuItem("Ãâ°áÁ¡¼ö °è»ê");
+		item = new JMenuItem("ì¶œê²°ì ìˆ˜ ê³„ì‚°");
 		item.addActionListener(this);
 		m2.add(item);
-		item = new JMenuItem("°­ÁÂÆò±Õ °è»ê");
+		item = new JMenuItem("ê°•ì¢Œí‰ê·  ê³„ì‚°");
 		item.addActionListener(this);
 		m2.add(item);
 
 		mb.add(m2);
 
-		item = new JMenuItem("ÃÑÁ¡¼ö ºĞÆ÷µµ");
+		item = new JMenuItem("ì´ì ìˆ˜ ë¶„í¬ë„");
 		item.addActionListener(this);
 		m3.add(item);
 		m3.addActionListener(this);
-		JMenu m = new JMenu("°¢ Á¡¼ö ºĞÆ÷µµ");
-		item = new JMenuItem("Ãâ¼®Á¡¼ö");
+		JMenu m = new JMenu("ê° ì ìˆ˜ ë¶„í¬ë„");
+		item = new JMenuItem("ì¶œì„ì ìˆ˜");
 		item.addActionListener(this);
 		m.add(item);
-		item = new JMenuItem("Áß°£½ÃÇèÁ¡¼ö");
+		item = new JMenuItem("ì¤‘ê°„ì‹œí—˜ì ìˆ˜");
 		item.addActionListener(this);
 		m.add(item);
-		item = new JMenuItem("±â¸»½ÃÇèÁ¡¼ö");
+		item = new JMenuItem("ê¸°ë§ì‹œí—˜ì ìˆ˜");
 		item.addActionListener(this);
 		m.add(item);
-		item = new JMenuItem("°úÁ¦Á¡¼ö");
+		item = new JMenuItem("ê³¼ì œì ìˆ˜");
 		item.addActionListener(this);
 		m.add(item);
-		item = new JMenuItem("ÄûÁîÁ¡¼ö");
+		item = new JMenuItem("í€´ì¦ˆì ìˆ˜");
 		item.addActionListener(this);
 		m.add(item);
-		item = new JMenuItem("¹ßÇ¥Á¡¼ö");
+		item = new JMenuItem("ë°œí‘œì ìˆ˜");
 		item.addActionListener(this);
 		m.add(item);
-		item = new JMenuItem("º¸°í¼­Á¡¼ö");
+		item = new JMenuItem("ë³´ê³ ì„œì ìˆ˜");
 		item.addActionListener(this);
 		m.add(item);
-		item = new JMenuItem("±âÅ¸Á¡¼ö");
+		item = new JMenuItem("ê¸°íƒ€ì ìˆ˜");
 		item.addActionListener(this);
 		m.add(item);
 		m3.add(m);
@@ -98,49 +99,49 @@ public class MenuDemo extends JFrame implements ActionListener {
 
 		mb.add(m3);
 
-		m4.add(new JMenuItem("ÆÄÀÏ Ãâ·Â"));
-		m4.add(new JMenuItem("È­¸é Ãâ·Â"));
+		m4.add(new JMenuItem("íŒŒì¼ ì¶œë ¥"));
+		m4.add(new JMenuItem("í™”ë©´ ì¶œë ¥"));
 		mb.add(m4);
 
-		m5.add(new JMenuItem("Ãâ°á »óÅÂ º¯°æ"));
-		m5.add(new JMenuItem("µî±Ş ºñÀ² ¼³Á¤"));
-		m5.add(new JMenuItem("°¢ Á¡¼öÀÇ ¹İ¿µ ºñÀ² ¼³Á¤"));
-		m5.add(new JMenuItem("¼ö°­ ÀÎ¿ø ¼³Á¤"));
+		m5.add(new JMenuItem("ì¶œê²° ìƒíƒœ ë³€ê²½"));
+		m5.add(new JMenuItem("ë“±ê¸‰ ë¹„ìœ¨ ì„¤ì •"));
+		m5.add(new JMenuItem("ê° ì ìˆ˜ì˜ ë°˜ì˜ ë¹„ìœ¨ ì„¤ì •"));
+		m5.add(new JMenuItem("ìˆ˜ê°• ì¸ì› ì„¤ì •"));
 		mb.add(m5);
 
-		setJMenuBar(mb);
+		jf.setJMenuBar(mb);
 
 	}
 
 	public void makePanels() {
-		// ÃÖ´ë 40¸íÀÌ±â ‹š¹®¿¡, 40°³·Î ¸¸µé¾î ³õ¾ÒÀ½.
+		// ìµœëŒ€ 40ëª…ì´ê¸° Â‹Âšë¬¸ì—, 40ê°œë¡œ ë§Œë“¤ì–´ ë†“ì•˜ìŒ.
 		BorderLayout b = new BorderLayout();
-		setLayout(b);
+		jf.setLayout(b);
 		JPanel Npanel = new JPanel();
 		JPanel Cpanel = new JPanel();
 		JPanel Spanel = new JPanel();
 
-		add(Npanel, BorderLayout.NORTH);
-		add(Cpanel, BorderLayout.CENTER);
-		add(Spanel, BorderLayout.SOUTH);
+		jf.add(Npanel, BorderLayout.NORTH);
+		jf.add(Cpanel, BorderLayout.CENTER);
+		jf.add(Spanel, BorderLayout.SOUTH);
 
-		// ¹öÆ°.
-		JButton save = new JButton("ÀúÀå");
+		// ë²„íŠ¼.
+		JButton save = new JButton("ì €ì¥");
 
-		// ¶óº§.
-		JLabel LName = new JLabel("ÀÌ¸§");
-		JLabel LStuID = new JLabel("ÇĞ¹ø");
-		JLabel LMid = new JLabel("Áß°£");
-		JLabel LFin = new JLabel("±â¸»");
-		JLabel LSub = new JLabel("°úÁ¦");
-		JLabel LQuz = new JLabel("ÄûÁî");
-		JLabel LPr = new JLabel("¹ßÇ¥");
-		JLabel LRe = new JLabel("º¸°í¼­");
-		JLabel LPl = new JLabel("±âÅ¸");
-		JLabel LAll = new JLabel("ÃÑÁ¡");
-		JLabel LRank = new JLabel("µî±Ş");
-		JLabel LChul = new JLabel("Ãâ¼®");
-		JButton button = new JButton("¼ºÀû°è»ê");
+		// ë¼ë²¨.
+		JLabel LName = new JLabel("ì´ë¦„");
+		JLabel LStuID = new JLabel("í•™ë²ˆ");
+		JLabel LMid = new JLabel("ì¤‘ê°„");
+		JLabel LFin = new JLabel("ê¸°ë§");
+		JLabel LSub = new JLabel("ê³¼ì œ");
+		JLabel LQuz = new JLabel("í€´ì¦ˆ");
+		JLabel LPr = new JLabel("ë°œí‘œ");
+		JLabel LRe = new JLabel("ë³´ê³ ì„œ");
+		JLabel LPl = new JLabel("ê¸°íƒ€");
+		JLabel LAll = new JLabel("ì´ì ");
+		JLabel LRank = new JLabel("ë“±ê¸‰");
+		JLabel LChul = new JLabel("ì¶œì„");
+		JButton button = new JButton("ì„±ì ê³„ì‚°");
 
 		Spanel.add(button);
 		Npanel.add(LName);
@@ -156,7 +157,7 @@ public class MenuDemo extends JFrame implements ActionListener {
 		Npanel.add(LAll);
 		Npanel.add(LRank);
 
-		// ÀÌ¸§°ú Á¡¼ö.
+		// ì´ë¦„ê³¼ ì ìˆ˜.
 		JTextField[] T_name = new JTextField[40];
 		JTextField[] T_ID = new JTextField[40];
 		JTextField[] T_mid = new JTextField[40];
@@ -201,51 +202,63 @@ public class MenuDemo extends JFrame implements ActionListener {
 
 		}
 
-		// ÃÑÁ¡¼ö¸¦ ±¸ÇÏ±âÀ§ÇÑ ÀÌº¥Æ®
+		// ì´ì ìˆ˜ë¥¼ êµ¬í•˜ê¸°ìœ„í•œ ì´ë²¤íŠ¸
 
 		button.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 				double[] all = new double[40];
-				for (int j = 0; j < 1; j++) {
-					String min = T_mid[j].getText();
-					String fin = T_fin[j].getText();
-					String Sub = T_Sub[j].getText();
-					String Quz = T_Quz[j].getText();
-					String Pr = T_Pr[j].getText();
-					String Re = T_Re[j].getText();
-					String Chul = T_Chul[j].getText();
-					String Pl = T_Pl[j].getText();
+				// for (int j = 0; j < 1; j++) {
+				// String min = T_mid[j].getText();
+				// String fin = T_fin[j].getText();
+				// String Sub = T_Sub[j].getText();
+				// String Quz = T_Quz[j].getText();
+				// String Pr = T_Pr[j].getText();
+				// String Re = T_Re[j].getText();
+				// String Chul = T_Chul[j].getText();
+				// String Pl = T_Pl[j].getText();
+				//
+				// all[j] = Double.parseDouble(min) + Double.parseDouble(fin) +
+				// Double.parseDouble(Sub)
+				// + Double.parseDouble(Quz) + Double.parseDouble(Pr) + Double.parseDouble(Re)
+				// + Double.parseDouble(Chul) + Double.parseDouble(Pl);
+				//
+				// T_All[j].setText("" + all[j]);
 
-					all[j] = Double.parseDouble(min) + Double.parseDouble(fin) + Double.parseDouble(Sub)
-							+ Double.parseDouble(Quz) + Double.parseDouble(Pr) + Double.parseDouble(Re)
-							+ Double.parseDouble(Chul) + Double.parseDouble(Pl);
+				if (per[0] != 0) {
+					for (int j = 0; j < 1; j++) {
+						String min = T_mid[j].getText();
+						String fin = T_fin[j].getText();
+						String Sub = T_Sub[j].getText();
+						String Quz = T_Quz[j].getText();
+						String Pr = T_Pr[j].getText();
+						String Re = T_Re[j].getText();
+						String Chul = T_Chul[j].getText();
+						String Pl = T_Pl[j].getText();
 
-					T_All[j].setText("" + all[j]);
+						all[j] = Double.parseDouble(min) * per[0] + Double.parseDouble(fin) * per[1]
+								+ Double.parseDouble(Sub) * per[2] + Double.parseDouble(Quz) * per[3]
+								+ Double.parseDouble(Pr) * per[4] + Double.parseDouble(Re) * per[5]
+								+ Double.parseDouble(Chul) * per[6] + Double.parseDouble(Pl) * per[7];
 
+						T_All[j].setText("" + all[j]);
+					}
 				}
+
 			}
 		});
 
-		setTitle("·¹ÀÌ¾Æ¿ô Å×½ºÆ®");
+		jf.setTitle("ë ˆì´ì•„ì›ƒ í…ŒìŠ¤íŠ¸");
 
 		Npanel.setLayout(new GridLayout(0, 12, 3, 3));
 		Npanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
 		Cpanel.setLayout(new GridLayout(40, 12, 3, 3));
-		/*
-		 * // °¢°¢ÀÇ Ç×¸ñ ºñÀ² °è»êÇØÁÖ±â. Perchant pc = new Perchant(); if (pc.per[0] != 0) {
-		 * double[] all = new double[40]; for (int j = 0; j < 1; j++) { String min =
-		 * T_mid[j].getText(); String fin = T_fin[j].getText(); String Sub =
-		 * T_Sub[j].getText(); String Quz = T_Quz[j].getText(); String Pr =
-		 * T_Pr[j].getText(); String Re = T_Re[j].getText(); String Chul =
-		 * T_Chul[j].getText(); String Pl = T_Pl[j].getText(); all[0] =
-		 * Double.parseDouble(min) * pc.per[0]; T_All[j].setText("" + all[0]);
-		 * 
-		 * } }
-		 */
+
+		// ê°ê°ì˜ í•­ëª© ë¹„ìœ¨ ê³„ì‚°í•´ì£¼ê¸°.
+
 	}
 
-	// ºñÀ²À» ¹İ¿µÇÏ±âÀ§ÇÑ ¸Ş¼­µå
+	// ë¹„ìœ¨ì„ ë°˜ì˜í•˜ê¸°ìœ„í•œ ë©”ì„œë“œ
 
 	public static void main(String[] args) throws SQLException {
 		new MenuDemo();
@@ -256,61 +269,61 @@ public class MenuDemo extends JFrame implements ActionListener {
 
 		JMenuItem mi = (JMenuItem) (e.getSource());
 		switch (mi.getText()) {
-		case "¼ºÀû°è»ê":
-			System.out.println("¼ºÀû°è»ê");
+		case "ì„±ì ê³„ì‚°":
+			System.out.println("ì„±ì ê³„ì‚°");
 
 			new ScoreCal();
 			break;
-		case "¹İ¿µºñÀ² ¼³Á¤":
-			System.out.println("¹İ¿µºñÀ² ¼³Á¤");
+		case "ë°˜ì˜ë¹„ìœ¨ ì„¤ì •":
+			System.out.println("ë°˜ì˜ë¹„ìœ¨ ì„¤ì •");
 			new Perchant();
 			break;
-		case "µî±Ş¼³Á¤":
-			System.out.println("µî±Ş¼³Á¤");
+		case "ë“±ê¸‰ì„¤ì •":
+			System.out.println("ë“±ê¸‰ì„¤ì •");
 			new SetGrade();
 			break;
-		case "Ãâ°áÁ¡¼ö °è»ê":
-			System.out.println("Ãâ°áÁ¡¼ö °è»ê");
+		case "ì¶œê²°ì ìˆ˜ ê³„ì‚°":
+			System.out.println("ì¶œê²°ì ìˆ˜ ê³„ì‚°");
 			new UCheck();
 			break;
-		case "°­ÁÂÆò±Õ °è»ê":
-			System.out.println("°­ÁÂÆò±Õ °è»ê");
+		case "ê°•ì¢Œí‰ê·  ê³„ì‚°":
+			System.out.println("ê°•ì¢Œí‰ê·  ê³„ì‚°");
 			new ClassAvg();
 			break;
-		case "ÃÑÁ¡¼ö ºĞÆ÷µµ":
-			System.out.println("ÃÑÁ¡¼ö ºĞÆ÷µµ Ãâ·Â");
+		case "ì´ì ìˆ˜ ë¶„í¬ë„":
+			System.out.println("ì´ì ìˆ˜ ë¶„í¬ë„ ì¶œë ¥");
 			new TotalGraph();
 			break;
-		case "Ãâ¼®Á¡¼ö":
-			System.out.println("Ãâ¼®Á¡¼ö Ãâ·Â");
+		case "ì¶œì„ì ìˆ˜":
+			System.out.println("ì¶œì„ì ìˆ˜ ì¶œë ¥");
 			new EachGraph("attendance");
 			break;
-		case "Áß°£½ÃÇèÁ¡¼ö":
-			System.out.println("Áß°£½ÃÇèÁ¡¼ö Ãâ·Â");
+		case "ì¤‘ê°„ì‹œí—˜ì ìˆ˜":
+			System.out.println("ì¤‘ê°„ì‹œí—˜ì ìˆ˜ ì¶œë ¥");
 			new EachGraph("middle");
 			break;
-		case "±â¸»½ÃÇèÁ¡¼ö":
-			System.out.println("±â¸»½ÃÇèÁ¡¼ö Ãâ·Â");
+		case "ê¸°ë§ì‹œí—˜ì ìˆ˜":
+			System.out.println("ê¸°ë§ì‹œí—˜ì ìˆ˜ ì¶œë ¥");
 			new EachGraph("final");
 			break;
-		case "°úÁ¦Á¡¼ö":
-			System.out.println("°úÁ¦Á¡¼ö Ãâ·Â");
+		case "ê³¼ì œì ìˆ˜":
+			System.out.println("ê³¼ì œì ìˆ˜ ì¶œë ¥");
 			new EachGraph("report");
 			break;
-		case "ÄûÁîÁ¡¼ö":
-			System.out.println("ÄûÁîÁ¡¼ö Ãâ·Â");
+		case "í€´ì¦ˆì ìˆ˜":
+			System.out.println("í€´ì¦ˆì ìˆ˜ ì¶œë ¥");
 			new EachGraph("quiz");
 			break;
-		case "¹ßÇ¥Á¡¼ö":
-			System.out.println("¹ßÇ¥Á¡¼ö Ãâ·Â");
+		case "ë°œí‘œì ìˆ˜":
+			System.out.println("ë°œí‘œì ìˆ˜ ì¶œë ¥");
 			new EachGraph("announcement");
 			break;
-		case "º¸°í¼­Á¡¼ö":
-			System.out.println("º¸°í¼­Á¡¼ö Ãâ·Â");
+		case "ë³´ê³ ì„œì ìˆ˜":
+			System.out.println("ë³´ê³ ì„œì ìˆ˜ ì¶œë ¥");
 			new EachGraph("report");
 			break;
-		case "±âÅ¸Á¡¼ö":
-			System.out.println("±âÅ¸Á¡¼ö Ãâ·Â");
+		case "ê¸°íƒ€ì ìˆ˜":
+			System.out.println("ê¸°íƒ€ì ìˆ˜ ì¶œë ¥");
 			new EachGraph("other");
 			break;
 
