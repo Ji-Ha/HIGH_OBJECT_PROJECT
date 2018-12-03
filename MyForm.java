@@ -7,16 +7,18 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+//import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -25,7 +27,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 public class MyForm extends JFrame {
-	
+
 	private JTable table;
 
 	public static void main(String[] args) {
@@ -46,29 +48,26 @@ public class MyForm extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 
-		// Label Result
-		final JLabel lblResult = new JLabel("Result", JLabel.CENTER);
-		lblResult.setBounds(150, 22, 370, 14);
-		getContentPane().add(lblResult);
 
 		// Table
 		table = new JTable();
 		getContentPane().add(table);
-		
+
 		// Table Model
 		final DefaultTableModel model = (DefaultTableModel)table.getModel();
 		model.addColumn("name");
 		model.addColumn("StudentId");
+		model.addColumn("Atend");
+		model.addColumn("Total");
 		model.addColumn("Mid");
 		model.addColumn("Fin");
-		model.addColumn("Subj");
+		model.addColumn("HW");
 		model.addColumn("Quiz");
 		model.addColumn("Pre");
 		model.addColumn("Report");
-		model.addColumn("Atend");
 		model.addColumn("Another");
-		model.addColumn("all");
-		
+		model.addColumn("Rank");
+
 		// ScrollPane
 		JScrollPane scroll = new JScrollPane(table);
 		scroll.setBounds(84, 98, 506, 79);
@@ -112,6 +111,7 @@ public class MyForm extends JFrame {
 							model.setValueAt(arr[8], row, 8);
 							model.setValueAt(arr[9], row, 9);
 							model.setValueAt(arr[10], row, 10);
+							model.setValueAt(arr[11], row, 11);
 							row++;
 						}
 						br.close();
@@ -120,26 +120,38 @@ public class MyForm extends JFrame {
 						ex.printStackTrace();
 					}
 
-					lblResult.setText(fileopen.getSelectedFile().toString());
+					//lblResult.setText(fileopen.getSelectedFile().toString());
 				}
 
 			}
 		});
 		getContentPane().add(btnButton);
-		
-		// Button Save
-		JButton btnSave = new JButton("Save");
+
+		// Button Save in DB
+		JButton btnSave = new JButton("SaveDB");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SaveData(); // save Data
 			}
 		});
-		btnSave.setBounds(292, 228, 89, 23);
+
+		// Button Save in CSV File
+		JButton btnCSV = new JButton("SaveCSV");
+		btnCSV.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SaveCSV();
+			}
+		});
+
+		btnSave.setBounds(360, 228, 89, 23);
 		getContentPane().add(btnSave);
 
+		btnCSV.setBounds(200,228,89,23);
+		getContentPane().add(btnCSV);
+
 	}
-	
-	
+
+
 	private void SaveData()
 	{
 		Connection connect = null;
@@ -147,37 +159,38 @@ public class MyForm extends JFrame {
 		String url = "jdbc:mysql://localhost/score?characterEncoding=UTF-8&serverTimezone=UTC";
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-
 			connect = DriverManager.getConnection(url,"root","12345");
 
 			s = connect.createStatement();
-			
+
 			for(int i = 0; i<table.getRowCount();i++)
 			{
 				String name = table.getValueAt(i, 0).toString();
 				String StudentId = table.getValueAt(i, 1).toString();
-				String Mid = table.getValueAt(i, 2).toString();
-				String Fin = table.getValueAt(i, 3).toString();
-				String Subj = table.getValueAt(i, 4).toString();
-				String Quiz = table.getValueAt(i, 5).toString();
-				String Pre = table.getValueAt(i, 6).toString();
-				String Report = table.getValueAt(i, 7).toString();
-				String Atend = table.getValueAt(i,8 ).toString();
-				String Another = table.getValueAt(i, 9).toString();
-				//String all = table.getValueAt(i, 10).toString();
-				
+				String Attend = table.getValueAt(i,2).toString();
+				String Total = table.getValueAt(i, 3).toString();
+				String Mid = table.getValueAt(i, 4).toString();
+				String Fin = table.getValueAt(i, 5).toString();
+				String HW = table.getValueAt(i, 6).toString();
+				String Quiz = table.getValueAt(i, 7).toString();
+				String Pre = table.getValueAt(i, 8).toString();
+				String Report = table.getValueAt(i, 9).toString();
+				String Another = table.getValueAt(i, 10).toString();
+				String Rank = table.getValueAt(i, 11).toString();
+
 				// SQL Insert
 
-				String sql = "INSERT INTO person (name, ID, middle, final, homework, quiz, announcement, report, other, total) VALUES "
-						+ "(" + "'" + name + "'," + StudentId + "," +  Mid + "," +  Fin + "," +  Subj + ","
-						+ Quiz + "," + Atend + ","+ Pre + "," +  Report + "," +  Another// + "," +  all
+				String sql = "INSERT INTO person (name, ID, attendance ,total ,middle, final, homework, quiz, announcement, report, other, rank_total) VALUES "
+						+ "(" + "'" + name + "'," + StudentId + "," +  Attend + "," +  Total + "," +  Mid + ","
+						+ Fin + "," + HW + "," + Quiz + "," +  Pre + "," +  Report + "," + Another + "," + Rank // + "," +  all
 						+ ")";
 				s.executeUpdate(sql);
+
 			}
-				
+
 			JOptionPane.showMessageDialog(null,
 					"Import Data Successfully");
-			//¿©±â±îÁö µ¥ÀÌÅÍ º£ÀÌ½º ÀúÀå
+			//ì—¬ê¸°ê¹Œì§€ ë°ì´í„° ë² ì´ìŠ¤ ì €ìž¥
 
 
 		} catch (Exception ex) {
@@ -185,6 +198,7 @@ public class MyForm extends JFrame {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 			ex.printStackTrace();
 		}
+
 
 		try {
 			if (s != null) {
@@ -198,4 +212,79 @@ public class MyForm extends JFrame {
 		}
 	}
 
+
+
+	private void SaveCSV()
+	{
+		Connection connect = null;
+		Statement s = null;
+		String url = "jdbc:mysql://localhost/score?characterEncoding=UTF-8&serverTimezone=UTC";
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			connect = DriverManager.getConnection(url,"root","12345");
+
+			s = connect.createStatement();
+			//String sql = "SELECT * FROM score.person";
+
+			ResultSet rec = s.executeQuery("SELECT * FROM score.person");
+
+			String path = "C:\\Users\\user\\Desktop\\csv\\sample.csv";
+			FileWriter writer;
+
+			try {
+				File file = new File(path);
+				writer = new FileWriter(file,true);
+
+				while((rec!=null)&&(rec.next())) {
+					writer.write(rec.getString("name"));
+					writer.write(",");
+					writer.write(rec.getString("ID"));
+					writer.write(",");
+					writer.write(rec.getString("attendance"));
+					writer.write(",");
+					writer.write(rec.getString("total"));
+					writer.write(",");
+					writer.write(rec.getString("middle"));
+					writer.write(",");
+					writer.write(rec.getString("final"));
+					writer.write(",");
+					writer.write(rec.getString("homework"));
+					writer.write(",");
+					writer.write(rec.getString("quiz"));
+					writer.write(",");
+					writer.write(rec.getString("announcement"));
+					writer.write(",");
+					writer.write(rec.getString("report"));
+					writer.write(",");
+					writer.write(rec.getString("other"));
+					writer.write(",");
+					writer.write(rec.getString("rank_total"));
+					writer.write("\n"); //\r\n
+				}
+				writer.flush();
+				writer.close();
+
+				System.out.println("Write success!");
+
+			}catch(IOException e) {
+				//TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// Close
+		try {
+			if(connect != null){
+				s.close();
+				connect.close();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
