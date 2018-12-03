@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -9,10 +10,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class Perchant {
+public class Perchant extends SetGrade {
 
 	JFrame window = new JFrame();
-	static double[] per = new double[8];
+	static public double[] per = new double[8];
 
 	/*
 	 * class WindowHandler extends WindowAdapter { public void
@@ -21,12 +22,17 @@ public class Perchant {
 	 * 
 	 * } }
 	 */
+	void show() {
+		window.setTitle("반영비율 계산");
+		window.setSize(430, 170);
+		window.setLocation(20, 20);
+		window.setVisible(true);
+
+	}
+
 	public Perchant() {
 		per[0] = 0;
 		// window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setTitle("반영비율 계산");
-		window.setLocation(20, 20);
-		window.setSize(430, 170);
 
 		JPanel p = new JPanel();
 		JLabel o = new JLabel("성적비율 설정(%)");
@@ -99,14 +105,6 @@ public class Perchant {
 		window.add(jb, BorderLayout.SOUTH);
 		// JPanel p1 = new JPanel();
 		// 상수화 시키기위해서 필요한것.
-		String min = a2.getText();
-		String fin = b2.getText();
-		String Sub = c2.getText();
-		String Quz = d2.getText();
-		String Pr = e2.getText();
-		String Re = f2.getText();
-		String Chul = g2.getText();
-		String Pl = h2.getText();
 
 		// 이벤트 생성.
 
@@ -151,8 +149,18 @@ public class Perchant {
 		};
 
 		jb.addActionListener(l);
-		window.setVisible(true);
 
 	}
 
+	public static void main(String[] args) throws SQLException {
+		// show();
+		new Perchant();
+	}
+
 }
+//
+// public class Perchant {
+// public static void main(String[] args) {
+// new PerchantDemo();
+// }
+// }
