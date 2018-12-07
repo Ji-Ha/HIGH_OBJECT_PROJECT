@@ -1,273 +1,562 @@
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
+package hi;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Vector;
 
-import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 
-@SuppressWarnings("serial")
-public class MenuDemo extends JFrame implements ActionListener {
-
-	// ÇĞ»ı ¼³Á¤.
+public class MenuDemo extends JFrame {
+	private JTable table = new JTable();
 	static Student[] stu = new Student[40];
+	public double[] per = new double[8];
+	JTextField searchNameTextField;
+	Connection connect = null;
+	// í•˜ì€ëˆ„ë‚˜ê°€ ì‚´ì§ ë´ì•¼í•¨.
+	private DefaultTableModel model;
 
-	public MenuDemo() throws SQLException {
-		super("¼ºÀûÃ³¸® ÇÁ·Î±×·¥");
+	MenuDemo() {
+		model = (DefaultTableModel)this.table.getModel();
+		//Vector row = new Vector();
+		//row.add("");
+		//model.addRow(row);
+		//model.setRowCount(0);
+     	model.setRowCount(40);
+
+	}
+
+
+	private void run() {
+		setTitle("ë¯¸ì™„ì„±ì‘í’ˆì…ë‹ˆë‹¤.");
 		makeMenu();
-		makePanels();
+		setSize(800, 345);
+		setLocation(500, 280);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(700, 1200);
 		setVisible(true);
 	}
 
-	public void makeMenu() {
-		JMenuItem item;
+	void SetModel(DefaultTableModel m) {
+
+		this.model = m;
+	}
+
+	public DefaultTableModel GetModel() {
+		return model;
+	}
+
+	// void SetPercent(doub);
+
+	void makeMenu() {
+		//table = new JTable();
 
 		JMenuBar mb = new JMenuBar();
-		JMenu m1 = new JMenu("ÆÄÀÏ");
-		JMenu m2 = new JMenu("½ÇÇà");
-		JMenu m3 = new JMenu("Åë°è");
-		JMenu m4 = new JMenu("Ãâ¼®");
-		JMenu m5 = new JMenu("¼³Á¤");
+		JMenu m1 = new JMenu("íŒŒì¼");
+		JMenu m2 = new JMenu("ì‹¤í–‰");
+		JMenu m3 = new JMenu("í†µê³„");
+		JMenu m4 = new JMenu("ì¶œì„");
+		JMenu m5 = new JMenu("ì„¤ì •");
+		getContentPane().add(table);
 
-		m1.add(new JMenuItem("ºÒ·¯¿À±â"));
-		m1.add(new JMenuItem("ÀúÀå"));
+		JMenuItem item = new JMenuItem("ë¶ˆëŸ¬ì˜¤ê¸°");
+		item.addActionListener(new MenuActionListener());
+		m1.add(item);
+		item = new JMenuItem("ë‚´ìš© ì €ì¥");
+		item.addActionListener(new MenuActionListener());
+		m1.add(item);
+		item = new JMenuItem("DBì— ì €ì¥");
+		item.addActionListener(new MenuActionListener());
+		m1.add(item);
+		item = new JMenuItem("CSVì— ì €ì¥");
+		item.addActionListener(new MenuActionListener());
+		m1.add(item);
 
-		mb.add(m1);
+		item = new JMenuItem("ì„±ì ê³„ì‚°");
+		item.addActionListener(new MenuActionListener());
+		m2.add(item);
+		item = new JMenuItem("ë°˜ì˜ë¹„ìœ¨ ì„¤ì •");
+		item.addActionListener(new MenuActionListener());
+		m2.add(item);
+		item = new JMenuItem("ë“±ê¸‰ì„¤ì •");
+		item.addActionListener(new MenuActionListener());
+		m2.add(item);
+		item = new JMenuItem("ì¶œê²°ì ìˆ˜ ê³„ì‚°");
+		item.addActionListener(new MenuActionListener());
+		m2.add(item);
+		item = new JMenuItem("ê°•ì¢Œí‰ê·  ê³„ì‚°");
+		item.addActionListener(new MenuActionListener());
+		m2.add(item);
 
-		m2.add(new JMenuItem("¼ºÀû °è»ê"));
-		m2.add(new JMenuItem("µî±Ş °è»ê"));
-		m2.add(new JMenuItem("Ãâ°á Á¡¼ö °è»ê"));
-		m2.add(new JMenuItem("°­ÁÂ Æò±Õ °è»ê"));
-		mb.add(m2);
+		////////////////////////////////// ì¶”ê°€///////////////////////////////////////
+		// JMenu search = new JMenu("í•™ìƒ ì„±ì  ê²€ìƒ‰");
+		// search.addActionListener(new MenuActionListener());
+		// m2.add(search);
+		// item = new JMenuItem("í•™ë²ˆ ê²€ìƒ‰");
+		// item.addActionListener(new MenuActionListener());
+		// search.add(item);
+		// item = new JMenuItem("ì´ë¦„ ê²€ìƒ‰");
+		// item.addActionListener(new MenuActionListener());
+		// search.add(item);
 
-		item = new JMenuItem("ÃÑÁ¡¼ö ºĞÆ÷µµ");
-		item.addActionListener(this);
+		// JLabel searchNameLabel = new JLabel("ì´ë¦„ ê²€ìƒ‰");
+		// JTextField searchNameTextField = new JTextField(3);
+		// mb.add(searchNameLabel);
+		// mb.add(searchNameTextField);
+
+		item = new JMenuItem("ì´ì ìˆ˜ ë¶„í¬ë„");
+		item.addActionListener(new MenuActionListener());
 		m3.add(item);
-		m3.addActionListener(this);
-		JMenu m = new JMenu("°¢ Á¡¼ö ºĞÆ÷µµ");
-		item = new JMenuItem("Ãâ¼®Á¡¼ö");
-		item.addActionListener(this);
+		JMenu m = new JMenu("ê° ì ìˆ˜ ë¶„í¬ë„");
+		item = new JMenuItem("ì¶œì„ì ìˆ˜");
+		item.addActionListener(new MenuActionListener());
 		m.add(item);
-		item = new JMenuItem("Áß°£½ÃÇèÁ¡¼ö");
-		item.addActionListener(this);
+		item = new JMenuItem("ì¤‘ê°„ì‹œí—˜ì ìˆ˜");
+		item.addActionListener(new MenuActionListener());
 		m.add(item);
-		item = new JMenuItem("±â¸»½ÃÇèÁ¡¼ö");
-		item.addActionListener(this);
+		item = new JMenuItem("ê¸°ë§ì‹œí—˜ì ìˆ˜");
+		item.addActionListener(new MenuActionListener());
 		m.add(item);
-		item = new JMenuItem("°úÁ¦Á¡¼ö");
-		item.addActionListener(this);
+		item = new JMenuItem("ê³¼ì œì ìˆ˜");
+		item.addActionListener(new MenuActionListener());
 		m.add(item);
-		item = new JMenuItem("ÄûÁîÁ¡¼ö");
-		item.addActionListener(this);
+		item = new JMenuItem("í€´ì¦ˆì ìˆ˜");
+		item.addActionListener(new MenuActionListener());
 		m.add(item);
-		item = new JMenuItem("¹ßÇ¥Á¡¼ö");
-		item.addActionListener(this);
+		item = new JMenuItem("ë°œí‘œì ìˆ˜");
+		item.addActionListener(new MenuActionListener());
 		m.add(item);
-		item = new JMenuItem("º¸°í¼­Á¡¼ö");
-		item.addActionListener(this);
+		item = new JMenuItem("ë³´ê³ ì„œì ìˆ˜");
+		item.addActionListener(new MenuActionListener());
 		m.add(item);
-		item = new JMenuItem("±âÅ¸Á¡¼ö");
-		item.addActionListener(this);
+		item = new JMenuItem("ê¸°íƒ€ì ìˆ˜");
+		item.addActionListener(new MenuActionListener());
 		m.add(item);
 		m3.add(m);
-		m3.addActionListener(this);
-
 		mb.add(m3);
 
-		m5.add(new JMenuItem("µî±Ş ºñÀ² ¼³Á¤"));
-		m5.add(new JMenuItem("°¢ Á¡¼öÀÇ ¹İ¿µ ºñÀ² ¼³Á¤"));
-		m5.add(new JMenuItem("¼ö°­ ÀÎ¿ø ¼³Á¤"));
-		mb.add(m5);
+		item = new JMenuItem("ì¶œì„ í˜„í™©");
+		item.addActionListener(new MenuActionListener());
+		m4.add(item);
 
+		mb.add(m1);
+		mb.add(m2);
+		mb.add(m3);
+		mb.add(m4);
+		////// ì¶”ê°€/////////////////
+		mb.add(Box.createHorizontalStrut(30));
+		JButton searchName = new JButton("ì´ë¦„ ê²€ìƒ‰");
+		searchName.addActionListener(new MenuActionListener());
+		searchNameTextField = new JTextField(3);
+		mb.add(searchNameTextField);
+		mb.add(searchName);
+		mb.add(Box.createHorizontalStrut(450));
 		setJMenuBar(mb);
-	}
 
-	public static void main(String[] args) throws SQLException {
-		new MenuDemo();
-	}
+		// Table Model
+		model = (DefaultTableModel) table.getModel();
+		model.addColumn("name");
+		model.addColumn("StudentId");
+		model.addColumn("Mid");
+		model.addColumn("Fin");
+		model.addColumn("HW");
+		model.addColumn("Quiz");
+		model.addColumn("Pre");
+		model.addColumn("Report");
+		model.addColumn("Attend");
+		model.addColumn("Another");
+		model.addColumn("Total");
+		model.addColumn("Rank");
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		JMenuItem mi = (JMenuItem) (e.getSource());
-		switch (mi.getText()) {
-		case "ÃÑÁ¡¼ö ºĞÆ÷µµ":
-			System.out.println("ÃÑÁ¡¼ö ºĞÆ÷µµ Ãâ·Â");
-			new TotalGraph();
-			break;
-		case "Ãâ¼®Á¡¼ö":
-			System.out.println("Ãâ¼®Á¡¼ö Ãâ·Â");
-			// new EachGraph("attenance");
-			break;
-		case "Áß°£½ÃÇèÁ¡¼ö":
-			System.out.println("Áß°£½ÃÇèÁ¡¼ö Ãâ·Â");
-			new EachGraph("middle");
-			break;
-		case "±â¸»½ÃÇèÁ¡¼ö":
-			System.out.println("±â¸»½ÃÇèÁ¡¼ö Ãâ·Â");
-			new EachGraph("final");
-			break;
-		case "°úÁ¦Á¡¼ö":
-			System.out.println("°úÁ¦Á¡¼ö Ãâ·Â");
-			new EachGraph("report");
-			break;
-		case "ÄûÁîÁ¡¼ö":
-			System.out.println("ÄûÁîÁ¡¼ö Ãâ·Â");
-			new EachGraph("quiz");
-			break;
-		case "¹ßÇ¥Á¡¼ö":
-			System.out.println("¹ßÇ¥Á¡¼ö Ãâ·Â");
-			new EachGraph("announcement");
-			break;
-		case "º¸°í¼­Á¡¼ö":
-			System.out.println("º¸°í¼­Á¡¼ö Ãâ·Â");
-			new EachGraph("report");
-			break;
-		case "±âÅ¸Á¡¼ö":
-			System.out.println("±âÅ¸Á¡¼ö Ãâ·Â");
-			new EachGraph("other");
-			break;
+		SetModel(model);
 
-		}
+		// ScrollPane
+		JScrollPane scroll = new JScrollPane(table);
+		scroll.setBounds(100, 100, 600, 100);
+		getContentPane().add(scroll);
 
 	}
 
-	public void makePanels() {
-		// ÃÖ´ë 40¸íÀÌ±â ‹š¹®¿¡, 40°³·Î ¸¸µé¾î ³õ¾ÒÀ½.
-		BorderLayout b = new BorderLayout();
-		setLayout(b);
-		JPanel Npanel = new JPanel();
-		JPanel Cpanel = new JPanel();
-		JPanel Spanel = new JPanel();
+	public static void main(String[] args) {
+		MenuDemo init = new MenuDemo();
+		init.run();
+	}
 
-		add(Npanel, BorderLayout.NORTH);
-		add(Cpanel, BorderLayout.CENTER);
-		add(Spanel, BorderLayout.SOUTH);
+	class MenuActionListener implements ActionListener {
 
-		// ¹öÆ°.
-		JButton save = new JButton("DB¿¡ ÀúÀå");
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String cmd = e.getActionCommand();
 
-		// ¶óº§.
-		JLabel LName = new JLabel("ÀÌ¸§");
-		JLabel LStuID = new JLabel("ÇĞ¹ø");
-		JLabel LMid = new JLabel("Áß°£");
-		JLabel LFin = new JLabel("±â¸»");
-		JLabel LSub = new JLabel("°úÁ¦");
-		JLabel LQuz = new JLabel("ÄûÁî");
-		JLabel LPr = new JLabel("¹ßÇ¥");
-		JLabel LRe = new JLabel("º¸°í¼­");
-		JLabel LPl = new JLabel("±âÅ¸");
-		JLabel LAll = new JLabel("ÃÑÁ¡");
-		JLabel LRank = new JLabel("µî±Ş");
-		JLabel LChul = new JLabel("Ãâ¼®");
+			switch (cmd) {
+			// ë°‘ì— ì„¸ê°œë¡œ í•˜ì€ëˆ„ë‚˜ê°€ ë§Œë“¤ê²ƒ.
+			// ë‚´ìš©ì €ì¥ì€ í”„ë¡œê·¸ë¨ ë‚´ë¶€ì—ì„œ ë°ì´í„°ë¥¼ ì €ì¥í•  ë•Œ í•„ìš”í•¨. í˜¹ì‹œ ë‹¤ë¥¸ ì˜ê²¬ì´ ìˆìœ¼ë©´ ë§í•´ì£¼ê¸° ë°”ëŒ.
+			case "ë¶ˆëŸ¬ì˜¤ê¸°":
+				System.out.println("ë¶ˆëŸ¬ì˜¤ê¸°");
+				// ì´ë ‡ê²Œ í•˜ê³  ì‹¶ì€ë° ì˜¤ë¥˜ê°€ ë‚˜ì„œ ë†”ë’€ìŒ.
+				// new CallData();
+				JFileChooser fileopen = new JFileChooser();
+				FileFilter filter = new FileNameExtensionFilter("Text/CSV file", "txt", "csv");
+				fileopen.addChoosableFileFilter(filter);
 
-		Npanel.add(LName);
-		Npanel.add(LStuID);
-		Npanel.add(LMid);
-		Npanel.add(LFin);
-		Npanel.add(LSub);
-		Npanel.add(LQuz);
-		Npanel.add(LPr);
-		Npanel.add(LRe);
-		Npanel.add(LChul);
-		Npanel.add(LPl);
-		Npanel.add(LAll);
-		Npanel.add(LRank);
+				int ret = fileopen.showDialog(null, "Choose file");
 
-		// ÀÌ¸§°ú Á¡¼ö.
-		JTextField[] T_name = new JTextField[40];
-		JTextField[] T_ID = new JTextField[40];
-		JTextField[] T_mid = new JTextField[40];
-		JTextField[] T_fin = new JTextField[40];
-		JTextField[] T_Sub = new JTextField[40];
-		JTextField[] T_Quz = new JTextField[40];
-		JTextField[] T_Pr = new JTextField[40];
-		JTextField[] T_Re = new JTextField[40];
-		JTextField[] T_Pl = new JTextField[40];
-		JTextField[] T_All = new JTextField[40];
-		JTextField[] T_Rank = new JTextField[40];
-		JTextField[] T_Chul = new JTextField[40];
+				if (ret == JFileChooser.APPROVE_OPTION) {
 
-		for (int i = 0; i < 40; i++) {
-			T_name[i] = new JTextField();
-			T_ID[i] = new JTextField();
-			T_mid[i] = new JTextField();
-			T_fin[i] = new JTextField();
-			T_Sub[i] = new JTextField();
-			T_Quz[i] = new JTextField();
-			T_Pr[i] = new JTextField();
-			T_Re[i] = new JTextField();
-			T_Pl[i] = new JTextField();
-			T_Chul[i] = new JTextField();
-			T_All[i] = new JTextField();
-			T_All[i].setEnabled(false);
-			T_Rank[i] = new JTextField();
-			T_Rank[i].setEnabled(false);
+					// Read Text file
+					File file = fileopen.getSelectedFile();
 
-			Cpanel.add(T_name[i]);
-			Cpanel.add(T_ID[i]);
-			Cpanel.add(T_mid[i]);
-			Cpanel.add(T_fin[i]);
-			Cpanel.add(T_Sub[i]);
-			Cpanel.add(T_Quz[i]);
-			Cpanel.add(T_Pr[i]);
-			Cpanel.add(T_Re[i]);
-			Cpanel.add(T_Chul[i]);
-			Cpanel.add(T_Pl[i]);
-			Cpanel.add(T_All[i]);
-			Cpanel.add(T_Rank[i]);
-		}
-
-		setTitle("·¹ÀÌ¾Æ¿ô Å×½ºÆ®");
-
-		Spanel.add(save);
-		Npanel.setLayout(new GridLayout(0, 12, 3, 3));
-		Npanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
-		Cpanel.setLayout(new GridLayout(40, 12, 3, 3));
-
-		ActionListener listener1 = e -> {
-			saveDB save1 = new saveDB();
-			if (e.getSource() == save) {
-				System.out.println("dhdn");
-				for (int i = 0; i < 40; i++) {
-					if (T_name[i].getText().isEmpty()) {
-						//
-					} else {
-						stu[i] = new Student();
-
-						stu[i].name = T_name[i].getText();
-						stu[i].StudentId = T_ID[i].getText();
-						stu[i].Mid = Integer.parseInt(T_mid[i].getText());
-						stu[i].Fin = Integer.parseInt(T_fin[i].getText());
-						stu[i].Subj = Integer.parseInt(T_Sub[i].getText());
-						stu[i].Quiz = Integer.parseInt(T_Quz[i].getText());
-						stu[i].Pre = Integer.parseInt(T_Pr[i].getText());
-						stu[i].Report = Integer.parseInt(T_Re[i].getText());
-						stu[i].Atend = Integer.parseInt(T_Chul[i].getText());
-						stu[i].Another = Integer.parseInt(T_Pl[i].getText());
-
-						try {
-							saveDB.saving(stu[i]);
-						} catch (SQLException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
+					try {
+						BufferedReader br = new BufferedReader(new FileReader(file));
+						String line;
+						int row = 0;
+						while ((line = br.readLine()) != null) {
+							String[] arr = line.split(",");
+							model.addRow(new Object[0]);
+							model.setValueAt(arr[0], row, 0);
+							model.setValueAt(arr[1], row, 1);
+							model.setValueAt(arr[2], row, 2);
+							model.setValueAt(arr[3], row, 3);
+							model.setValueAt(arr[4], row, 4);
+							model.setValueAt(arr[5], row, 5);
+							model.setValueAt(arr[6], row, 6);
+							model.setValueAt(arr[7], row, 7);
+							model.setValueAt(arr[8], row, 8);
+							model.setValueAt(arr[9], row, 9);
+							row++;
 						}
+						br.close();
+					} catch (IOException ex) {
+						ex.printStackTrace();
 					}
 				}
-			}
+				for (int i = 0; i < table.getRowCount() - 40; i++) {
+					String name = table.getValueAt(i, 0).toString();
+					String StudentId = table.getValueAt(i, 1).toString();
+					String Attend = table.getValueAt(i, 2).toString();
+					String Total = table.getValueAt(i, 3).toString();
+					String Mid = table.getValueAt(i, 4).toString();
+					String Fin = table.getValueAt(i, 5).toString();
+					String HW = table.getValueAt(i, 6).toString();
+					String Quiz = table.getValueAt(i, 7).toString();
+					String Pre = table.getValueAt(i, 8).toString();
+					String Report = table.getValueAt(i, 9).toString();
+					stu[i] = new Student(name, StudentId, Attend, Total, Mid, Fin, HW, Quiz, Pre, Report);
+				}
+				break;
 
-		};
-		// save¿¡ ¸®½º³Ê ÀúÀå.
-		save.addActionListener(listener1);
+			case "DBì— ì €ì¥":
+				System.out.println("DBì— ì €ì¥");
+				Connection con = null;
+				Statement s = null;
+				String url = "jdbc:mysql://localhost:1234/score?characterEncoding=UTF-8&serverTimezone=UTC";
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					// System.out.println("ë°ì´í„°ë² ì´ìŠ¤ ì—°ê²° ì¤‘...");
+					con = DriverManager.getConnection(url, "root", "1234");
+					// System.out.println("ë°ì´í„°ë² ì´ìŠ¤ ì—°ê²° ì„±ê³µ");
+
+					s = con.createStatement();
+
+					for (int i = 0; i < table.getRowCount(); i++) {
+						String name = table.getValueAt(i, 0).toString();
+						String StudentId = table.getValueAt(i, 1).toString();
+						String Attend = table.getValueAt(i, 2).toString();
+						String Total = table.getValueAt(i, 3).toString();
+						String Mid = table.getValueAt(i, 4).toString();
+						String Fin = table.getValueAt(i, 5).toString();
+						String HW = table.getValueAt(i, 6).toString();
+						String Quiz = table.getValueAt(i, 7).toString();
+						String Pre = table.getValueAt(i, 8).toString();
+						String Report = table.getValueAt(i, 9).toString();
+						String Another = table.getValueAt(i, 10).toString();
+						String rank_total = table.getValueAt(i, 11).toString();
+						// SQL Insert
+
+						String sql = "INSERT INTO person (name, StudentId, Attend ,Total ,Mid, Fin, HW, Quiz, Pre, Report, Another, rank_total) VALUES "
+								+ "(" + "'" + name + "'," + StudentId + "," + Attend + "," + Total + "," + Mid + ","
+								+ Fin + "," + HW + "," + Quiz + "," + Pre + "," + Report + "," + Another + "," + "'"
+								+ rank_total + "')";
+						s.executeUpdate(sql);
+
+					}
+
+					JOptionPane.showMessageDialog(null, "Import Data Successfully");
+
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(null, ex.getMessage());
+					ex.printStackTrace();
+				}
+
+				try {
+					if (s != null) {
+						s.close();
+						connect.close();
+					}
+				} catch (SQLException e1) {
+					System.out.println(e1.getMessage());
+					e1.printStackTrace();
+				}
+
+				break;
+
+			case "CSVì— ì €ì¥":
+				System.out.println("CSVì— ì €ì¥");
+				connect = null;
+				s = null;
+				url = "jdbc:mysql://localhost:1234/score?characterEncoding=UTF-8&serverTimezone=UTC";
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					connect = DriverManager.getConnection(url, "root", "1234");
+
+					s = connect.createStatement();
+
+					ResultSet rec = s.executeQuery("SELECT * FROM person");
+
+					String path = "C:\\Users\\ì±„ì†Œì—°\\Desktop\\sample.csv";
+					FileWriter writer;
+
+					try {
+						File file = new File(path);
+						writer = new FileWriter(file, true);
+
+						while ((rec != null) && (rec.next())) {
+							writer.write(rec.getString("name"));
+							writer.write(",");
+							writer.write(rec.getString("StudentId"));
+							writer.write(",");
+							writer.write(rec.getString("Attend"));
+							writer.write(",");
+							writer.write(rec.getString("Total"));
+							writer.write(",");
+							writer.write(rec.getString("Mid"));
+							writer.write(",");
+							writer.write(rec.getString("Fin"));
+							writer.write(",");
+							writer.write(rec.getString("HW"));
+							writer.write(",");
+							writer.write(rec.getString("Quiz"));
+							writer.write(",");
+							writer.write(rec.getString("Pre"));
+							writer.write(",");
+							writer.write(rec.getString("Report"));
+							writer.write(",");
+							writer.write(rec.getString("Another"));
+							writer.write(",");
+							writer.write(rec.getString("rank_total"));
+							writer.write("\n");
+							System.out.println(1);
+						}
+						writer.flush();
+						writer.close();
+
+						System.out.println("Write success!");
+
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+
+				// Close
+				try {
+					if (connect != null) {
+						s.close();
+						connect.close();
+					}
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+
+				break;
+
+			case "ë‚´ìš© ì €ì¥":
+				System.out.println("ë‚´ìš© ì €ì¥");
+				connect = null;
+				s = null;
+				url = "jdbc:mysql://localhost/score?characterEncoding=UTF-8&serverTimezone=UTC";
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					connect = DriverManager.getConnection(url, "root", "1234");
+
+					s = connect.createStatement();
+
+					for (int i = 0; i < table.getRowCount(); i++) {
+						// stu[i] = new Student();
+						// stu[i].setName(table.getValueAt(i, 0).toString());
+						// String StudentId = table.getValueAt(i, 1).toString();
+						// String Mid = table.getValueAt(i,2).toString();
+						// String Fin = table.getValueAt(i, 3).toString();
+						// String HW = table.getValueAt(i, 4).toString();
+						// String Quiz = table.getValueAt(i, 5).toString();
+						// String Pre = table.getValueAt(i, 6).toString();
+						// String Report = table.getValueAt(i, 7).toString();
+						// String Attend = table.getValueAt(i, 8).toString();
+						// String Another = table.getValueAt(i, 9).toString();
+						// String Total = table.getValueAt(i, 10).toString();
+						// String Rank = table.getValueAt(i, 11).toString();
+						//
+						// // SQL Insert
+						//
+						// System.out.println(name + Mid);
+
+						// String sql = "INSERT INTO person (name, StudentId, Mid ,Fin ,HW, Quiz, Pre,
+						// Report, Attend, Another, Total, Rank) VALUES "
+						// + "(" + "'" + name + "'," + StudentId + "," + Mid + "," + Fin + "," + HW +
+						// ","
+						// + Quiz + "," + Pre + "," + Report + "," + Attend + "," + Another + "," +
+						// Total + "," + Rank// + "," + all
+						// + ")";
+						// System.out.println(sql);
+						// s.executeUpdate(sql);
+
+					}
+
+					JOptionPane.showMessageDialog(null, "Import Data Successfully");
+
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(null, ex.getMessage());
+					ex.printStackTrace();
+				}
+
+				try {
+					if (s != null) {
+						s.close();
+						connect.close();
+					}
+				} catch (SQLException e1) {
+					System.out.println(e1.getMessage());
+					e1.printStackTrace();
+				}
+
+				break;
+			case "ì„±ì ê³„ì‚°":
+				System.out.println("ì„±ì ê³„ì‚°");
+				new ScoreCal();
+				break;
+			case "ë°˜ì˜ë¹„ìœ¨ ì„¤ì •":
+				System.out.println("ë°˜ì˜ë¹„ìœ¨ ì„¤ì •");
+				Perchant pc = new Perchant();
+				pc.show();
+				break;
+			case "ë“±ê¸‰ì„¤ì •":
+				System.out.println("ë“±ê¸‰ì„¤ì •");
+				SetGrade sg = new SetGrade();
+				sg.show();
+				break;
+			case "ì¶œì„ í˜„í™©":
+				System.out.println("ì¶œì„ í˜„í™©");
+				new UCheck();
+				break;
+			case "ê°•ì¢Œí‰ê·  ê³„ì‚°":
+				System.out.println("ê°•ì¢Œí‰ê·  ê³„ì‚°");
+				new ClassAvg(stu, stu.length);
+				break;
+			case "ì´ì ìˆ˜ ë¶„í¬ë„":
+				System.out.println("ì´ì ìˆ˜ ë¶„í¬ë„ ì¶œë ¥");
+				// new TotalGraph();
+				new EachGraph("Total");
+				break;
+			case "ì¶œì„ì ìˆ˜":
+				System.out.println("ì¶œì„ì ìˆ˜ ì¶œë ¥");
+				new EachGraph("Attend");
+				break;
+			case "ì¤‘ê°„ì‹œí—˜ì ìˆ˜":
+				System.out.println("ì¤‘ê°„ì‹œí—˜ì ìˆ˜ ì¶œë ¥");
+				new EachGraph("Mid");
+				break;
+			case "ê¸°ë§ì‹œí—˜ì ìˆ˜":
+				System.out.println("ê¸°ë§ì‹œí—˜ì ìˆ˜ ì¶œë ¥");
+				new EachGraph("Fin");
+				break;
+			case "ê³¼ì œì ìˆ˜":
+				System.out.println("ê³¼ì œì ìˆ˜ ì¶œë ¥");
+				new EachGraph("HW");
+				break;
+			case "í€´ì¦ˆì ìˆ˜":
+				System.out.println("í€´ì¦ˆì ìˆ˜ ì¶œë ¥");
+				new EachGraph("Quiz");
+				break;
+			case "ë°œí‘œì ìˆ˜":
+				System.out.println("ë°œí‘œì ìˆ˜ ì¶œë ¥");
+				new EachGraph("Pre");
+				break;
+			case "ë³´ê³ ì„œì ìˆ˜":
+				System.out.println("ë³´ê³ ì„œì ìˆ˜ ì¶œë ¥");
+				new EachGraph("Report");
+				break;
+			case "ê¸°íƒ€ì ìˆ˜":
+				System.out.println("ê¸°íƒ€ì ìˆ˜ ì¶œë ¥");
+				new EachGraph("Another");
+				break;
+			/////////////////////////////// ì¶”ê°€//////////////////////////////////
+			case "í•™ë²ˆ ê²€ìƒ‰":
+				System.out.println("í•™ë²ˆ ê²€ìƒ‰");
+				model.setNumRows(0);
+				break;
+			case "ì´ë¦„ ê²€ìƒ‰":
+				System.out.println("ì´ë¦„ ê²€ìƒ‰");
+				int num = table.getRowCount();
+				System.out.println(num);
+				for (int i = 0; i < num; i++) {
+					System.out.println(searchNameTextField.getText());
+					if (searchNameTextField.getText().equals(stu[i].name)) {
+						model.setNumRows(0);
+						model.addRow(new Object[0]);
+						model.setValueAt(stu[i].name, 0, 0);
+						model.setValueAt(stu[i].StudentId, 0, 1);
+						model.setValueAt(stu[i].Mid, 0, 2);
+						model.setValueAt(stu[i].Fin, 0, 3);
+						model.setValueAt(stu[i].Subj, 0, 4);
+						model.setValueAt(stu[i].Pre, 0, 5);
+						model.setValueAt(stu[i].Report, 0, 6);
+						model.setValueAt(stu[i].Atend, 0, 7);
+						model.setValueAt(stu[i].Another, 0, 8);
+						if (stu[i].all == null) {
+							model.setValueAt(null, 0, 9);
+						} else {
+							model.setValueAt(stu[i].all, 0, 9);
+						}
+						if (stu[i].rank == null) {
+							model.setValueAt(null, 0, 10);
+						} else {
+							model.setValueAt(stu[i].rank, 0, 10);
+						}
+						break;
+					}
+					System.out.println(stu[i].name);
+				}
+				if (table.getRowCount() != 1) {
+					JOptionPane.showMessageDialog(null, "í•´ë‹¹í•˜ëŠ” í•™ìƒ ì •ë³´ê°€ ì—†ìŠµë‹ˆë‹¤.");
+				}
+				break;
+
+			}
+		}
+
 	}
 
 }
