@@ -22,8 +22,6 @@ public class TotalGraph extends JFrame {
 			int numD = 0; // D인 학생의 수
 			int numF = 0; // F인 학생의 수
 
-			// int[] numGrade; // A+ A B+ B C+ C D F 순으로 numGrade[0]은 A+의 수를 의미
-
 			System.out.println("점수 확인");
 			Connection con = null;
 			PreparedStatement pstmt = null;
@@ -95,13 +93,8 @@ public class TotalGraph extends JFrame {
 		setSize(590, 400);
 
 		add(dp, BorderLayout.CENTER);
-		insert();
 		setVisible(true);
 		setResizable(false);
-	}
-
-	private void insert() {
-		scoreInsert.insert();
 	}
 
 	public static void close(Connection con, PreparedStatement pstmt) {

@@ -56,12 +56,13 @@ public class EachGraphPanel extends JPanel {
 			g.drawString((Integer.toString(numFive)), 435, 350 - numFive * 30 - 10);
 		}
 		if (numSix > 0) {
-			g.fillRect(550, 350 - numSix * 30, 20, numSix * 30);
-			g.drawString((Integer.toString(numSix)), 555, 350 - numSix * 30 - 10);
+
+			g.fillRect(500, 350 - numSix * 30, 20, numSix * 30);
+			g.drawString((Integer.toString(numSix)), 505, 350 - numSix * 30 - 10);
 		}
 		if (numSeven > 0) {
 			g.fillRect(570, 350 - numSeven * 30, 20, numSeven * 30);
-			g.drawString((Integer.toString(numSeven)), 555, 350 - numSeven * 30 - 10);
+			g.drawString((Integer.toString(numSeven)), 575, 350 - numSeven * 30 - 10);
 		}
 		if (numEight > 0) {
 			g.fillRect(640, 350 - numEight * 30, 20, numEight * 30);
@@ -81,9 +82,20 @@ public class EachGraphPanel extends JPanel {
 		this.numTwo = numTwo;
 		this.numThree = numThree;
 		this.numFour = numFour;
+		this.numFive = numFive;
 		this.numSix = numSix;
 		this.numSeven = numSeven;
 		this.numEight = numEight;
 		this.numNine = numNine;
+		// System.out.println(numZero);
+		// System.out.println(numOne);
+		// System.out.println(numTwo);
+		// System.out.println(numThree);
+		// System.out.println(numFour);
+		// System.out.println(numSix);
+		// System.out.println(numSeven);
+		// System.out.println(numEight);
+		// System.out.println(numNine);
+
 	}
 }

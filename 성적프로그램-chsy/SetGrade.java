@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -11,12 +12,17 @@ import javax.swing.JTextField;
 
 public class SetGrade {
 	JFrame window = new JFrame();
+	MenuDemo pr = new MenuDemo();
 
-	public SetGrade() {
-
+	void show() {
 		window.setTitle("등급 설정");
 		window.setLocation(20, 20);
-		window.setSize(380, 210);
+		window.setSize(405, 220);
+		window.setVisible(true);
+
+	}
+
+	public SetGrade() {
 
 		JPanel p = new JPanel();
 		JLabel o = new JLabel("등급 설정(%)");
@@ -128,6 +134,11 @@ public class SetGrade {
 
 		};
 		jb.addActionListener(l);
-		window.setVisible(true);
+
+	}
+
+	public static void main(String[] args) throws SQLException {
+		// show();
+		new SetGrade();
 	}
 }
